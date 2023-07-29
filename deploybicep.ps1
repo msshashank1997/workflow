@@ -1,45 +1,9 @@
-
-# This IaC script provisions a VM within Azure
-#
-[CmdletBinding()]
-param(
-    [Parameter(Mandatory = $True)]
-    [string]
-    $servicePrincipal,
-
-    [Parameter(Mandatory = $True)]
-    [string]
-    $servicePrincipalSecret,
-
-    [Parameter(Mandatory = $True)]
-    [string]
-    $servicePrincipalTenantId,
-
-    [Parameter(Mandatory = $True)]
-    [string]
-    $azureSubscriptionName,
-
-    [Parameter(Mandatory = $True)]
-    [string]
-    $resourceGroupName,
-
-    [Parameter(Mandatory = $True)]
-    [string]
-    $resourceGroupNameRegion,
-
-    [Parameter(Mandatory = $True)]  
-    [string]
-    $serverName,
-
-    [Parameter(Mandatory = $True)]  
-    [string]
-    $adminLogin,
-
-    [Parameter(Mandatory = $True)]  
-    [String]
-    $adminPassword    
-)
-
+$servicePrincipal = ${{ secrets.SERVICE_PRINCIPAL_APPID }}
+$servicePrincipalSecret = ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+$servicePrincipalTenantId = ${{ secrets.SERVICE_PRINCIPAL_TENANTID }}
+$azureSubscriptionName = ${{ secrets.AZURE_SUBSCRIPTION_NAME }}
+$serverName = "gihtubactions"
+  
 $DID = 'DepID'
 
 $rgname = 'host-'+$DID
