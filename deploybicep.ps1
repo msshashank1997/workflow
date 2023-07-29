@@ -3,6 +3,8 @@ $servicePrincipalSecret = $env:secrets.SERVICE_PRINCIPAL_SECRET
 $servicePrincipalTenantId = $env:secrets.SERVICE_PRINCIPAL_TENANTID
 $azureSubscriptionName = $env:secrets.AZURE_SUBSCRIPTION_NAME
 $serverName = "gihtubactions"
+$adminLogin = $env:secrets.AZURE_SUBSCRIPTION_NAME
+$adminPassword = $env:secrets.ADMIN_PASSWORD
   
 $DID = 'DepID'
 
