@@ -1,38 +1,28 @@
-name: GitHub for IT Pro CI/CD Pipeline
-
-env:
-  OUTPUT_PATH: ${{ github.workspace }}
-
-on: 
-  workflow_dispatch:
+name: Run Python, PowerShell, and Python Scripts
+on:
+  push:
+    branches:
+      - main  # Replace 'main' with the branch you want to trigger the action on
+  pull_request:
 
 jobs:
-      
-  # Deploy VM in Azure
-  DeployVM:
-    runs-on: windows-latest
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-    # checkout code from repo
-    - name: checkout repo
-      uses: actions/checkout@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: look for ps1 file
-      run: |
-        ls '${{ env.OUTPUT_PATH }}'
-    - name: provision virtual machine in azure
-      env:
-        RESOURCE_GROUP: bicep
-        RESOURCE_GROUP_REGION: eastus
-        SERVER_NAME: gihtubactions
-        ADMIN_LOGIN: ${{ secrets.AZURE_SUBSCRIPTION_NAME }}
-      run: >
-        powershell -command "& '${{ env.OUTPUT_PATH }}\deploybicep.ps1'" 
-        -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
-        -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
-        -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
-        -azureSubscriptionName ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        -resourceGroupName %RESOURCE_GROUP% 
-        -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
-        -serverName %SERVER_NAME% 
-        -adminLogin %ADMIN_LOGIN%
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4  # Replace '3.x' with the Python version you need
+
+      - name: Run Python Script 1
+        run: python secreate.py  # Replace 'path/to/script1.py' with the actual path to your first Python script
+
+      - name: Run PowerShell Script
+        run: pwsh -File deploybicep.ps1  # Replace 'path/to/script.ps1' with the actual path to your PowerShell script
+
+      - name: Run Python Script 2
+        run: python replace.py  # Replace 'path/to/script2.py' with the actual path to your second Python script
