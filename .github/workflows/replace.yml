@@ -15,8 +15,8 @@ jobs:
       with:
         repository: msshashank1997/workflow
         token: ${{ secrets.GITHUB_TOKEN }}
-        path: ${{ env.DEVOPS_DIR }}
+        path: $${{ env.OUTPUT_PATH }}
 
     - name: Hello World
-      run: python ${{ env.DEVOPS_DIR }}/replace.py
+      run: python $${{ env.OUTPUT_PATH }}/replace.py
       shell: sh
