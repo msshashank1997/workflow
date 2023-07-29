@@ -37,7 +37,7 @@ Write-Output ""
 
 Write-Output "Creating resource group $rgname in region eastus..."
 az group create `
-    --name $rgname `
+    --name 'bicep' `
     --location "eastus"
     Write-Output "Done creating resource group"
     Write-Output ""
