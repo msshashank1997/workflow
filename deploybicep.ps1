@@ -1,7 +1,7 @@
-$servicePrincipal = $env:secrets.SERVICE_PRINCIPAL_APPID }}
-$servicePrincipalSecret = $env:secrets.SERVICE_PRINCIPAL_SECRET }} 
-$servicePrincipalTenantId = $env:secrets.SERVICE_PRINCIPAL_TENANTID }}
-$azureSubscriptionName = $env:secrets.AZURE_SUBSCRIPTION_NAME }}
+$servicePrincipal = $env:secrets.SERVICE_PRINCIPAL_APPID
+$servicePrincipalSecret = $env:secrets.SERVICE_PRINCIPAL_SECRET
+$servicePrincipalTenantId = $env:secrets.SERVICE_PRINCIPAL_TENANTID
+$azureSubscriptionName = $env:secrets.AZURE_SUBSCRIPTION_NAME
 $serverName = "gihtubactions"
   
 $DID = 'DepID'
