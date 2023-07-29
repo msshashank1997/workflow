@@ -1,4 +1,4 @@
-name: Password generator
+name: Replace Value
 on:
   push:
     branches:
