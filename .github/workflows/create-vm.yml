@@ -1,3 +1,28 @@
-name: GitHub for IT Pro CI/CD Pipeline
+name: Main Workflow
 
-env:
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Include and run other YAML files from the same repo
+      - name: Run File 1
+        uses: ./.github/workflows/file1.yml
+        # This will include and execute the content of file1.yml as part of the current job
+
+      - name: Run File 2
+        uses: ./.github/workflows/file2.yml
+        # This will include and execute the content of file2.yml as part of the current job
+        
+      - name: Run File 2
+        uses: ./.github/workflows/file2.yml
+        # This will include and execute the content of file2.yml as part of the current job
