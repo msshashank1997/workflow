@@ -1,5 +1,4 @@
-name: On Push Run
-
+name: replace file name
 on: 
   workflow_dispatch:
 
