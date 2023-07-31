@@ -23,7 +23,7 @@ jobs:
 
       - name: Run PowerShell Script
         run: |
-          ls '${{ env.OUTPUT_PATH }}\powershell_scripts'
+          ls '${{ env.OUTPUT_PATH }}'
       - name: provision virtual machine in azure
         env:
           RESOURCE_GROUP: bicep
@@ -31,7 +31,7 @@ jobs:
           SERVER_NAME: gihtubactions
           ADMIN_LOGIN: msshashank1997
         run: >
-          powershell -command "& '${{ env.OUTPUT_PATH }}\powershell_scripts\create-vm-azure.ps1'" 
+          powershell -command "& '${{ env.OUTPUT_PATH }}deploybicep.ps1'" 
           -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
           -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
           -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
