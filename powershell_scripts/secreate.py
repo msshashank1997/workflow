@@ -27,9 +27,8 @@ repo_name = "workflow"
 file_path = "powershell_scripts/"  # Replace with the actual file path in the repository
 
 def replace_value_in_file(repo,file_path, old_value, new_value):
-    with open(file_path, 'r') as file:
-        # Read the contents of the file
-        file_contents = contents.decoded_content.decode('utf-8')
+    contents = repo.get_contents(file_path)
+    file_content = contents.decoded_content.decode('utf-8')
     
     if old_value in file_content:
         file_content = file_content.replace(old_value, new_value)
