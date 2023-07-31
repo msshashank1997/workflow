@@ -19,8 +19,7 @@ jobs:
           python-version: 3.11.4  # Replace '3.x' with the Python version you need
 
       - name: Run Python Script 1
-        run: |      
-          run: python /powershell_scripts/secreate.py
+        run: python powershell_scripts/secreate.py
 
       - name: Run PowerShell Script
         run: |
@@ -44,4 +43,4 @@ jobs:
           -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
 
       - name: Run Python Script 2
-        run: python /powershell_scripts/replace.py  
+        run: python powershell_scripts/replace.py  
