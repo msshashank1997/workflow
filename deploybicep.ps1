@@ -1,11 +1,43 @@
-$servicePrincipal = $env:secrets.SERVICE_PRINCIPAL_APPID
-$servicePrincipalSecret = $env:secrets.SERVICE_PRINCIPAL_SECRET
-$servicePrincipalTenantId = $env:secrets.SERVICE_PRINCIPAL_TENANTID
-$azureSubscriptionName = $env:secrets.AZURE_SUBSCRIPTION_NAME
-$subid= $env:secrets.AZURE_SUBSCRIPTION_ID
-$serverName = "gihtubactions"
-$adminLogin = $env:secrets.AZURE_SUBSCRIPTION_NAME
-$adminPassword = $env:secrets.ADMIN_PASSWORD
+# This IaC script provisions a VM within Azure
+#
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $True)]
+    [string]
+    $servicePrincipal,
+
+    [Parameter(Mandatory = $True)]
+    [string]
+    $servicePrincipalSecret,
+
+    [Parameter(Mandatory = $True)]
+    [string]
+    $servicePrincipalTenantId,
+
+    [Parameter(Mandatory = $True)]
+    [string]
+    $azureSubscriptionName,
+
+    [Parameter(Mandatory = $True)]
+    [string]
+    $resourceGroupName,
+
+    [Parameter(Mandatory = $True)]
+    [string]
+    $resourceGroupNameRegion,
+
+    [Parameter(Mandatory = $True)]  
+    [string]
+    $serverName,
+
+    [Parameter(Mandatory = $True)]  
+    [string]
+    $adminLogin,
+
+    [Parameter(Mandatory = $True)]  
+    [String]
+    $adminPassword
+)
   
 $DID = 'DepID'
 $rgname = 'host-'+$DID
@@ -14,17 +46,20 @@ $rgname = 'host-'+$DID
 # This logs into Azure with a Service Principal Account
 
 Write-Output "Logging in to Azure with a service principal..."
-
-# Authenticate using the service principal (clientId and clientSecret)
-$SecureClientSecret = ConvertTo-SecureString $servicePrincipalSecret -AsPlainText -Force
-$psCred = New-Object System.Management.Automation.PSCredential($servicePrincipal, $servicePrincipalSecret)
-Connect-AzAccount -ServicePrincipal -Credential $psCred -Tenant $servicePrincipalTenantId
+az login `
+    --service-principal `
+    --username $servicePrincipal `
+    --password $servicePrincipalSecret `
+    --tenant $servicePrincipalTenantId
+Write-Output "Done"
+Write-Output ""
 
 #region Subscription
 #This sets the subscription the resources will be created in
 
 Write-Output "Setting default azure subscription..."
-Set-AzContext -SubscriptionId $subid
+az account set `
+    --subscription $azureSubscriptionName
 Write-Output "Done"
 Write-Output ""
 #endregion
@@ -33,15 +68,17 @@ Write-Output ""
 # This creates the resource group used to house the VM
 
 Write-Output "Creating resource group $rgname in region eastus..."
-New-AzResourceGroup -Name $rgname -Location "eastus"
-Write-Output "Done creating resource group"
-Write-Output ""
+az group create `
+    --name $rgname `
+    --location "eastus"
+    Write-Output "Done creating resource group"
+    Write-Output ""
 
 #region Create VM
 # Create a VM in the resource group
 
 try {
-    New-AzResourceGroupDeployment -ResourceGroupName $rgname -TemplateFile .\main.bicep -TemplateParameterFile .\parameters.json
+    az deployment group create --resource-group MyResourceGroup --template-file main.bicep --parameters parameters.json
 }
 catch {
     Write-Output "VM already exists"
