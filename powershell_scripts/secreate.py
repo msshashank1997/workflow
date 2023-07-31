@@ -2,7 +2,7 @@ import string
 import random
 import os
 
-PAT = os.environ.get('MY_SECRET')
+g = os.environ.get('MY_SECRET')
 
 def generate_password(n):
     # Define the set of allowed characters
@@ -52,7 +52,6 @@ print(DepID)
 DID = 'DeploymentID'
 PWD = 'Password'
 
-g = Github(PAT)
 repo = g.get_repo(f"{repo_owner}/{repo_name}")
 
 # Replacing the Value of UPA and Password in bpa

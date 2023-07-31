@@ -6,8 +6,7 @@ repo_owner = "msshashank1997"
 repo_name = 'workflow'
 file_path = "powershell_scripts/"  # Replace with the actual file path in the repository
 
-PAT = os.environ.get('MY_SECRET')
-g = Github(PAT)
+g =  os.environ.get('MY_SECRET')
 repo = g.get_repo(f"{repo_owner}/{repo_name}")
 
 def replace_value_in_file(repo,file_path, old_value, new_value):
