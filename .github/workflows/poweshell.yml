@@ -22,7 +22,25 @@ jobs:
         run: python secreate.py  # Replace 'path/to/script1.py' with the actual path to your first Python script
 
       - name: Run PowerShell Script
-        run: pwsh -File deploybicep.ps1  # Replace 'path/to/script.ps1' with the actual path to your PowerShell script
+        run: |
+          ls '${{ env.OUTPUT_PATH }}\powershell_scripts'
+      - name: provision virtual machine in azure
+        env:
+          RESOURCE_GROUP: bicep
+          RESOURCE_GROUP_REGION: eastus
+          SERVER_NAME: gihtubactions
+          ADMIN_LOGIN: msshashank1997
+        run: >
+          powershell -command "& '${{ env.OUTPUT_PATH }}\powershell_scripts\create-vm-azure.ps1'" 
+          -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
+          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+          -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
+          -azureSubscriptionName ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          -resourceGroupName %RESOURCE_GROUP% 
+          -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
+          -serverName %SERVER_NAME% 
+          -adminLogin %ADMIN_LOGIN% 
+          -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
 
       - name: Run Python Script 2
         run: python replace.py  # Replace 'path/to/script2.py' with the actual path to your second Python script
