@@ -1,12 +1,19 @@
 import secreate
 
-def replace_value_in_file(file_path, old_value, new_value):
+PAT = $env.secrets.SERVICE_GITHUB_TOKEN
+g = Github(PAT)
+repo = g.get_repo(f"{repo_owner}/{repo_name}")
+
+def replace_value_in_file(repo,file_path, old_value, new_value):
     with open(file_path, 'r') as file:
         # Read the contents of the file
-        file_contents = file.read()
+        file_contents = contents.decoded_content.decode('utf-8')
+    
+    if old_value in file_content:
+        file_content = file_content.replace(old_value, new_value)
 
-        # Replace the old value with the new value
-        modified_contents = file_contents.replace(old_value, new_value)
+        # Update the file in the repository
+        repo.update_file(contents.path, f"Updated {file_path}", file_content, contents.sha)
 
     with open(file_path, 'w') as file:
         # Write the modified contents back to the file
@@ -15,8 +22,8 @@ def replace_value_in_file(file_path, old_value, new_value):
 DID = 'DeploymentID'
 PWD = 'Password'
 
-replace_value_in_file('parameters.json', PWD, secreate.replace1)
-replace_value_in_file('parameters.json', DID, secreate.replace2)
-replace_value_in_file('deploybicep.ps1', DID, secreate.replace2)
-replace_value_in_file('replace.py', PWD, secreate.PWD)
-replace_value_in_file('replace.py', DID, secreate.DID)
+replace_value_in_file(repo,'parameters.json', PWD, secreate.replace1)
+replace_value_in_file(repo,'parameters.json', DID, secreate.replace2)
+replace_value_in_file(repo,'deploybicep.ps1', DID, secreate.replace2)
+replace_value_in_file(repo,'replace.py', PWD, secreate.PWD)
+replace_value_in_file(repo,'replace.py', DID, secreate.DID)
