@@ -1,6 +1,6 @@
 import string
 import random
-from github import Github
+
 
 PAT = os.environ.get('MY_SECRET')
 
@@ -34,10 +34,6 @@ def replace_value_in_file(repo,file_path, old_value, new_value):
 
         # Update the file in the repository
         repo.update_file(contents.path, f"Updated {file_path}", file_content, contents.sha)
-
-    with open(file_path, 'w') as file:
-        # Write the modified contents back to the file
-        file.write(modified_contents)
 
 
 replace1 = 'GEN-PASSWORD'
