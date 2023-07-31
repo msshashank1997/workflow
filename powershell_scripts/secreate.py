@@ -2,7 +2,7 @@ import string
 import random
 from github import Github
 
-PAT = $env.secrets.SERVICE_GITHUB_TOKEN
+PAT = os.environ.get('MY_SECRET')
 
 def generate_password(n):
     # Define the set of allowed characters

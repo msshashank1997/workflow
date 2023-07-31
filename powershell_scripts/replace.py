@@ -1,6 +1,12 @@
 import secreate
+import os
+from github import Github
 
-PAT = $env.secrets.SERVICE_GITHUB_TOKEN
+repo_owner = "msshashank1997"
+repo_name = 'workflow'
+file_path = "powershell_scripts/"  # Replace with the actual file path in the repository
+
+PAT = os.environ.get('MY_SECRET')
 g = Github(PAT)
 repo = g.get_repo(f"{repo_owner}/{repo_name}")
 
