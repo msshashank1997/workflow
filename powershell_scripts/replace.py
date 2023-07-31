@@ -2,8 +2,8 @@ import secreate
 import os
 from github import Github
 
-
-g = Github(SERVICE_GITHUB_TOKEN)
+PAT = os.environ.get('MY_SECRET')
+g = Github(PAT)
 
 repo_owner = "msshashank1997"
 repo_name = 'workflow'
