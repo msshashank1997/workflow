@@ -19,8 +19,8 @@ jobs:
           python-version: 3.11.4  # Replace '3.x' with the Python version you need
 
       - name: Run Python Script 1
-          env:
-            MY_SECRET: ${{ secrets.SERVICE_GITHUB_TOKEN }}
+        env:
+          MY_SECRET: ${{ secrets.SERVICE_GITHUB_TOKEN }}
         run: python powershell_scripts/secreate.py
 
       - name: Run PowerShell Script
