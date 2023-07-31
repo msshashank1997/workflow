@@ -20,7 +20,7 @@ jobs:
 
       - name: Run Python Script 1
         run: |      
-          run: python https://raw.githubusercontent.com/msshashank1997/workflow/main/powershell_scripts/secreate.py  # Replace 'path/to/script1.py' with the actual path to your first Python script
+          run: python /powershell_scripts/secreate.py
 
       - name: Run PowerShell Script
         run: |
@@ -44,4 +44,4 @@ jobs:
           -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
 
       - name: Run Python Script 2
-        run: python https://raw.githubusercontent.com/msshashank1997/workflow/main/powershell_scripts/replace.py  # Replace 'path/to/script2.py' with the actual path to your second Python script
+        run: python /powershell_scripts/replace.py  
