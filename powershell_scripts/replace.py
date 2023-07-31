@@ -1,6 +1,9 @@
 import secreate
 import os
+from github import Github
 
+
+g = Github(SERVICE_GITHUB_TOKEN)
 
 repo_owner = "msshashank1997"
 repo_name = 'workflow'

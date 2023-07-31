@@ -1,8 +1,9 @@
 import string
 import random
 import os
+from github import Github
 
-g = os.environ.get('MY_SECRET')
+g = Github(SERVICE_GITHUB_TOKEN)
 
 def generate_password(n):
     # Define the set of allowed characters
