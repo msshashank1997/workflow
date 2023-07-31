@@ -46,7 +46,7 @@ az group create `
 # Create a VM in the resource group
 
 try {
-    New-AzResourceGroupDeployment -ResourceGroupName $rgname -TemplateUri 'bicepcontiner.azurecr.io/bicep/modules/main:v1' -TemplateParameterFile .\parameters.json
+    New-AzResourceGroupDeployment -ResourceGroupName $rgname -TemplateFile .\main.bicep -TemplateParameterFile .\parameters.json
 }
 catch {
     Write-Output "VM already exists"
