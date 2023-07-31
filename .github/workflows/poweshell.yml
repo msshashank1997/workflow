@@ -19,11 +19,11 @@ jobs:
           python-version: 3.11.4  # Replace '3.x' with the Python version you need
 
       - name: Run Python Script 1
-        run: python secreate.py  # Replace 'path/to/script1.py' with the actual path to your first Python script
+        run: python \powershell_scripts\secreate.py  # Replace 'path/to/script1.py' with the actual path to your first Python script
 
       - name: Run PowerShell Script
         run: |
-          ls '${{ env.OUTPUT_PATH }}'
+          ls '${{ env.OUTPUT_PATH }}\powershell_scripts'
       - name: provision virtual machine in azure
         env:
           RESOURCE_GROUP: bicep
@@ -31,7 +31,7 @@ jobs:
           SERVER_NAME: gihtubactions
           ADMIN_LOGIN: msshashank1997
         run: >
-          powershell -command "& '${{ env.OUTPUT_PATH }}deploybicep.ps1'" 
+          powershell -command "& '${{ env.OUTPUT_PATH }}\powershell_scripts\deploybicep.ps1'" 
           -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
           -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
           -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
@@ -43,4 +43,4 @@ jobs:
           -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
 
       - name: Run Python Script 2
-        run: python replace.py  # Replace 'path/to/script2.py' with the actual path to your second Python script
+        run: python \powershell_scripts\replace.py  # Replace 'path/to/script2.py' with the actual path to your second Python script
