@@ -1,7 +1,5 @@
 import string
 import random
-import os
-
 
 def generate_password(n):
     # Define the set of allowed characters
@@ -52,8 +50,6 @@ print(DepID)
 
 DID = 'DeploymentID'
 PWD = 'Password'
-
-repo = g.get_repo(f"{repo_owner}/{repo_name}")
 
 # Replacing the Value of UPA and Password in bpa
 replace_value_in_file(file_path2, replace1, pwd)
