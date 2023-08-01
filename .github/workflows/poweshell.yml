@@ -36,3 +36,4 @@ jobs:
         -serverName %SERVER_NAME% 
         -adminLogin %ADMIN_LOGIN% 
         -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
+        
