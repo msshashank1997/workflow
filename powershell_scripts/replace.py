@@ -1,33 +1,24 @@
 import secreate
-import os
-from github import Github
 
-PAT = os.environ.get('MY_SECRET')
-g = Github(PAT)
+file_path1 = "powershell_scripts/replace.py"  # Replace with the actual path of the file you want to modify
+file_path2 = "powershell_scripts/parameters.json"
+file_path3 = "powershell_scripts/deploybicep.ps1"
 
-repo_owner = "msshashank1997"
-repo_name = 'workflow'
-file_path = "powershell_scripts/"  # Replace with the actual file path in the repository
+def replace_value_in_file(file_path, old_value, new_value):
+    # Read the content of the file
+    with open(file_path, 'r') as file:
+        content = file.read()    
+    content = content.replace(old_value, new_value)
 
-g =  os.environ.get('MY_SECRET')
-repo = g.get_repo(f"{repo_owner}/{repo_name}")
-
-def replace_value_in_file(repo,file_path, old_value, new_value):
-    contents = repo.get_contents(file_path)
-    file_content = contents.decoded_content.decode('utf-8')
-    
-    if old_value in file_content:
-        file_content = file_content.replace(old_value, new_value)
-
-        # Update the file in the repository
-        repo.update_file(contents.path, f"Updated {file_path}", file_content, contents.sha)
-
+    # Write the modified content back to the file
+    with open(file_path, 'w') as file:
+        file.write(content)
 
 DID = 'DeploymentID'
 PWD = 'Password'
 
-replace_value_in_file(repo,'parameters.json', PWD, secreate.replace1)
-replace_value_in_file(repo,'parameters.json', DID, secreate.replace2)
-replace_value_in_file(repo,'deploybicep.ps1', DID, secreate.replace2)
-replace_value_in_file(repo,'replace.py', PWD, secreate.PWD)
-replace_value_in_file(repo,'replace.py', DID, secreate.DID)
+replace_value_in_file(file_path2, PWD, secreate.replace1)
+replace_value_in_file(file_path2, DID, secreate.replace2)
+replace_value_in_file(file_path3, DID, secreate.replace2)
+replace_value_in_file(file_path1, PWD, secreate.PWD)
+replace_value_in_file(file_path1, DID, secreate.DID)
