@@ -39,7 +39,7 @@ param(
     $adminPassword
 )
   
-$DID = 'DepID'
+$DID = '55679'
 $rgname = 'host-'+$DID
 
 #region Login

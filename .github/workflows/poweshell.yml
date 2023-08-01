@@ -1,55 +1,38 @@
-name: Run Python, PowerShell, and Python Scripts
-on:
-  push:
-    branches:
-      - main  # Replace 'main' with the branch you want to trigger the action on
-  pull_request:
+name: GitHub for IT Pro CI/CD Pipeline
+
+env:
+  OUTPUT_PATH: ${{ github.workspace }}
+
+on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+      
+  # Deploy VM in Azure
+  DeployVM:
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    # checkout code from repo
+    - name: checkout repo
+      uses: actions/checkout@v1
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11.4  # Replace '3.x' with the Python version you need
-        
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install PyGithub
-
-      - name: Run Python Script 1
-        env:
-          MY_SECRET: ${{ secrets.SERVICE_GITHUB_TOKEN }}
-        run: python powershell_scripts/secreate.py
-
-      - name: Run PowerShell Script
-        run: |
-          ls '${{ env.OUTPUT_PATH }}\powershell_scripts'
-      - name: provision virtual machine in azure
-        env:
-          RESOURCE_GROUP: bicep
-          RESOURCE_GROUP_REGION: eastus
-          SERVER_NAME: gihtubactions
-          ADMIN_LOGIN: msshashank1997
-        run: >
-          powershell -command "& '${{ env.OUTPUT_PATH }}\powershell_scripts\deploybicep.ps1'" 
-          -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
-          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
-          -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
-          -azureSubscriptionName ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          -resourceGroupName %RESOURCE_GROUP% 
-          -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
-          -serverName %SERVER_NAME% 
-          -adminLogin %ADMIN_LOGIN% 
-          -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
-
-      - name: Run Python Script 2
-        env:
-          MY_SECRET: ${{ secrets.SERVICE_GITHUB_TOKEN }}
-        run: python powershell_scripts/replace.py  
+    - name: look for ps1 file
+      run: |
+        ls '${{ env.OUTPUT_PATH }}\powershell_scripts'
+    - name: provision virtual machine in azure
+      env:
+        RESOURCE_GROUP: bicep
+        RESOURCE_GROUP_REGION: eastus
+        SERVER_NAME: gihtubactions
+        ADMIN_LOGIN: msshashank1997
+      run: >
+        powershell -command "& '${{ env.OUTPUT_PATH }}\powershell_scripts\deploybicep.ps1'" 
+        -servicePrincipal ${{ secrets.SERVICE_PRINCIPAL_APPID }}
+        -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+        -servicePrincipalTenantId ${{ secrets.SERVICE_PRINCIPAL_TENANTID }} 
+        -azureSubscriptionName ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        -resourceGroupName %RESOURCE_GROUP% 
+        -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
+        -serverName %SERVER_NAME% 
+        -adminLogin %ADMIN_LOGIN% 
+        -adminPassword ${{ secrets.ADMIN_PASSWORD }} 
