@@ -78,7 +78,7 @@ az group create `
 # Create a VM in the resource group
 
 try {
-    az deployment group create --resource-group MyResourceGroup --template-file 'D:\a\workflow\workflow\powershell_scripts\main.bicep' --parameters parameters.json
+    az deployment group create --resource-group MyResourceGroup --template-file 'D:\a\workflow\workflow\powershell_scripts\main.bicep' --parameters 'D:\a\workflow\workflow\powershell_scripts\parameters.json'
 }
 catch {
     Write-Output "VM already exists"
