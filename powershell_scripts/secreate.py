@@ -1,6 +1,7 @@
 import string
 import random
 import requests
+import base64
 
 def replace_value_on_github(repo_owner, repo_name, file_path, old_value, new_value, access_token):
     # Get the current content of the file from GitHub
@@ -8,11 +9,16 @@ def replace_value_on_github(repo_owner, repo_name, file_path, old_value, new_val
         "Authorization": f"token {access_token}"
     }
     response = requests.get(f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}", headers=headers)
-    response_json = response.json()
+    
+    if response.status_code == 200:
+        response_json = response.json()
 
-    # Decode the content from base64
-    import base64
-    content = base64.b64decode(response_json['content']).decode()
+        # Decode the content from base64
+        try:
+            content = base64.b64decode(response_json['content']).decode()
+        except KeyError:
+            print("Error: 'content' field not found in the API response. Make sure the file exists.")
+            return
 
     # Replace the old value with the new value
     updated_content = content.replace(old_value, new_value)
