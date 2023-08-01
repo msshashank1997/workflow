@@ -23,7 +23,7 @@ var subnetPrefix = '10.0.0.0/24'
 var virtualMachineSize = 'Standard_D4s_v3'
 var virtualNetworkName = 'labvNet'
 
-module publicIP 'br:bicepcontiner.azurecr.io/bicep/modules/publicip:v1' = {
+module publicIP 'publicip.bicep' = {
   name: 'publicIP'
   params: {
     publicIpAddressDNSName: publicIpAddressDNSName
@@ -32,7 +32,7 @@ module publicIP 'br:bicepcontiner.azurecr.io/bicep/modules/publicip:v1' = {
   }
 }
 
-module nsg 'br:bicepcontiner.azurecr.io/bicep/modules/nsg:v1' = {
+module nsg 'nsg.bicep' = {
   name: 'nsg'
   params: {
     networkSecurityGroupName: networkSecurityGroupName
@@ -40,7 +40,7 @@ module nsg 'br:bicepcontiner.azurecr.io/bicep/modules/nsg:v1' = {
   }
 }
 
-module virtualnetwork 'br:bicepcontiner.azurecr.io/bicep/modules/virtualnetwork:v1' = {
+module virtualnetwork 'virtualnetwork.bicep' = {
   name: 'VN'
   params: {
     virtualNetworkName: virtualNetworkName
@@ -52,7 +52,7 @@ module virtualnetwork 'br:bicepcontiner.azurecr.io/bicep/modules/virtualnetwork:
   }
 }
 
-module networkinterface 'br:bicepcontiner.azurecr.io/bicep/modules/networkinterfaces:v1' = {
+module networkinterface 'networkinterfaces.bicep' = {
   name: 'networkinterface'
   params: {
     networkInterfaceName: networkInterfaceName
@@ -67,7 +67,7 @@ module networkinterface 'br:bicepcontiner.azurecr.io/bicep/modules/networkinterf
   ]
 }
 
-module virtualMachine 'br:bicepcontiner.azurecr.io/bicep/modules/windowsvm:v1' = {
+module virtualMachine 'windowsvm.bicep' = {
   name: 'vmName'
   params: {
     vmName: vmName
