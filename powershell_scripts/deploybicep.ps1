@@ -39,7 +39,7 @@ param(
     $adminPassword
 )
   
-$DID = '55679'
+$DID = '55678'
 $rgname = 'host-'+$DID
 
 #region Login
